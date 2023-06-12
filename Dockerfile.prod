@@ -8,20 +8,10 @@ RUN yarn install
 
 RUN yarn build
 
-# FROM node:hydrogen-alpine3.16
-
-# WORKDIR /home/node/app
-
-# RUN npm install -g http-server
-
-# COPY --from=builder /home/node/app/dist .
-
-# EXPOSE 8080
-
-# CMD [ "http-server", "." ]
-
-FROM node:hydrogen-alpine3.16
+FROM nginx:1.15.0-alpine
 
 WORKDIR /home/node/app
 
-COPY --from=builder /home/node/app/dist .
+EXPOSE 80
+
+COPY --from=builder /home/node/app/dist /usr/share/nginx/html
